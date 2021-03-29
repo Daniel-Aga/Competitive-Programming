@@ -7,7 +7,7 @@ const int infty = 1e9;
 
 struct Point
 {
-	int x, y;
+	long long x, y;
 	Point(int x, int y) : x(x), y(y)
 	{
 	}
