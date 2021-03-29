@@ -20,7 +20,7 @@ struct Point
 	}
 	Point operator-(Point& other)
 	{
-		return Point(x - other.x, y + other.y);
+		return Point(x - other.x, y - other.y);
 	}
 	Point operator-()
 	{
