@@ -3,7 +3,7 @@
 
 using namespace std;
 
-const int infty = 1e9;
+const long long infty = 1e18;
 
 struct Point
 {
