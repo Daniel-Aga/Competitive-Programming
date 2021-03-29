@@ -8,7 +8,7 @@ const long long infty = 1e18;
 struct Point
 {
 	long long x, y;
-	Point(int x, int y) : x(x), y(y)
+	Point(long long x, long long y) : x(x), y(y)
 	{
 	}
 	Point() : Point(0, 0)
