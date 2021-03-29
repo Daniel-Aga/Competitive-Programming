@@ -163,7 +163,7 @@ long double polygonArea(vector<Point>& poly) //Points in polygon are sorted in c
 	return abs(ans / 2);
 }
 
-bool pointInPolygon(vector<Point>& poly, Point p) //Also returns true if P is on one of the sides.
+bool pointInPolygon(vector<Point>& poly, Point p) //Also returns true if P is on one of the sides. This is INCORRECT if the ray hits a vertex, check wikipedia for example and fix. TODO: implement the fix.
 {
 	Point extreme(infty, p.y);
 
