@@ -19,7 +19,7 @@ bool DFS(Node* graph, int s) //Returns True if finds cycle.
 		int currNei = graph[s].outNeighbors[i];
 		if (graph[currNei].vis)
 		{
-			return true;
+			return true; //TODO!!!: This is very wrong, instead we need to check if currNei is GRAY (it's fine if its BLACK).
 		}
 		if (DFS(graph, currNei))
 		{
