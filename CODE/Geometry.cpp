@@ -125,7 +125,7 @@ struct ComparatorByAngle
 	}
 	bool operator()(Point& a, Point& b)
 	{
-		int dir = direction(origin, a, b);
+		long long dir = direction(origin, a, b);
 		if (dir == 0)
 		{
 			return closerToOrigin(origin, a, b);
