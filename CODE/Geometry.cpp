@@ -1,5 +1,7 @@
+#define _USE_MATH_DEFINES
 #include <algorithm>
 #include <vector>
+#include <math.h>
 
 using namespace std;
 
@@ -26,6 +28,10 @@ struct Point
 	{
 		return Point(-x, -y);
 	}
+	bool operator==(const Point& other)
+	{
+		return x == other.x && y == other.y;
+	}
 };
 
 long long dotProduct(Point a, Point b)
@@ -38,9 +44,9 @@ long long crossProduct(Point a, Point b)
 	return a.x*b.y - b.x*a.y;
 }
 
-long long direction(Point a, Point b, Point c) //returns (c-a)X(b-a)
+long long direction(Point a, Point b, Point c) //returns (b-a)X(c-a)
 {
-	return crossProduct(c - a, b - a);
+	return crossProduct(b - a, c - a);
 }
 
 int counterClockwise(Point a, Point b, Point c) //Whether segment AC is counter-clockwise with respect to AB. 1 if counter-clockwise, 0 if they are colinear, -1 if clockwise.
@@ -100,7 +106,7 @@ bool cmpByY(Point& a, Point& b)
 {
 	if (a.y == b.y)
 	{
-		return a.x < b.y;
+		return a.x < b.x;
 	}
 	return a.y < b.y;
 }
@@ -141,7 +147,13 @@ vector<Point> convexHull(vector<Point>& points)
 	swap(points[0], points[minimalPoint]);
 	sort(points.begin() + 1, points.end(), ComparatorByAngle(points[0]));
 	vector<Point> ans = { points[0], points[1], points[2] };
-	for (int i = 3; i < points.size(); i++)
+	int i = 3;
+	while (turnLeft(ans[0], ans[1], ans[2]) == 0) //TODO: Is this loop really needed?
+	{
+		ans.erase(ans.begin() + 1);
+		ans.push_back(points[i++]);
+	}
+	for (; i < points.size(); i++)
 	{
 		while (turnLeft(ans[ans.size() - 2], ans.back(), points[i]) != 1)
 		{
@@ -163,22 +175,25 @@ long double polygonArea(vector<Point>& poly) //Points in polygon are sorted in c
 	return abs(ans / 2);
 }
 
-bool pointInPolygon(vector<Point>& poly, Point p) //Also returns true if P is on one of the sides. This is INCORRECT if the ray hits a vertex, check wikipedia for example and fix. TODO: implement the fix.
+bool pointInPolygon(vector<Point>& poly, Point p) //Also returns true if P is on one of the sides.
 {
 	Point extreme(infty, p.y);
 
 	int sidesIntersect = 0;
-	for (int i = 0; i <= poly.size(); i++)
+	for (int i = 0; i < poly.size(); i++)
 	{
 		int next = (i + 1) % poly.size();
 
 		if (segmentsIntersect(poly[i], poly[next], p, extreme))
 		{
-			if (direction(poly[i], p, poly[next]) == 0 && onSegment(poly[i], p, poly[next]))
+			if (direction(poly[i], p, poly[next]) == 0 && onSegment(poly[i], poly[next], p))
 			{
 				return true;
 			}
-			sidesIntersect++;
+			if (poly[i].y < p.y || poly[next].y < p.y) //This fixes the case where the ray hits a vertex, check wikipedia for example.
+			{
+				sidesIntersect++;
+			}
 		}
 	}
 	return sidesIntersect % 2 == 1;
