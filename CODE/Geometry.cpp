@@ -190,7 +190,7 @@ bool pointInPolygon(vector<Point>& poly, Point p) //Also returns true if P is on
 			{
 				return true;
 			}
-			if (poly[i].y < p.y || poly[next].y < p.y) //This fixes the case where the ray hits a vertex, check wikipedia for example.
+			if (poly[i].y < p.y || poly[next].y < p.y) //This fixes the case where the ray hits a vertex, check Wikipedia for example: https://en.wikipedia.org/wiki/Point_in_polygon#Limited_precision
 			{
 				sidesIntersect++;
 			}
