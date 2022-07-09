@@ -15,14 +15,14 @@ struct FenwickTree
 			arr[i] = 0;
 		}
 	}
-	void update(long long x, long long delta)
+	void update(long long x, long long delta) //x in [0, sz_in - 1]
 	{
 		for (x++; x <= sz; x += x & (-x))
 		{
 			arr[x] += delta;
 		}
 	}
-	long long query(long long x)
+	long long query(long long x) //x in [0, sz_in - 1]
 	{
 		long long ans = 0;
 		for (x++; x > 0; x -= x & (-x))
@@ -31,7 +31,7 @@ struct FenwickTree
 		}
 		return ans;
 	}
-	long long query(long long x, long long y)
+	long long query(long long x, long long y) //x, y in [0, sz_in - 1]
 	{
 		return query(y) - query(x - 1);
 	}
@@ -60,7 +60,7 @@ struct RangeFenwickTree
 		}
 		ft.initValues(diffVals, sz);
 	}
-	void update(long long a, long long b, long long delta)
+	void update(long long a, long long b, long long delta) //a, b in [0, sz_in - 1]
 	{
 		ft.update(a, delta);
 		if (b < sz - 1)
@@ -68,7 +68,7 @@ struct RangeFenwickTree
 			ft.update(b + 1, -delta);
 		}
 	}
-	long long query(long long a)
+	long long query(long long a) //a in [0, sz_in - 1]
 	{
 		return ft.query(0, a);
 	}
