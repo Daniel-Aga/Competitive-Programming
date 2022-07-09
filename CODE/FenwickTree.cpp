@@ -8,7 +8,7 @@ struct FenwickTree
 	long long sz;
 	FenwickTree(long long sz_in)
 	{
-		sz = 1 << (long long)(log2(sz_in) + 1);
+		sz = 1LL << (long long)(log2(sz_in) + 1);
 		arr = new long long[sz + 1];
 		for (long long i = 0; i <= sz; i++)
 		{
